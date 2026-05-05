@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Image Click Logger</title>
+  </head>
+  <body>
+    <h1>Click the image</h1>
+    <img
+      id="track-image"
+      src="https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?auto=format&fit=crop&w=800&q=80"
+      alt="Sample"
+      style="max-width: 400px; cursor: pointer;"
+    />
+
+    <script>
+      const image = document.getElementById("track-image");
+
+      image.addEventListener("click", async () => {
+        try {
+          await fetch("/api/log", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              url: window.location.href,
+              userAgent: navigator.userAgent,
+            }),
+          });
+        } catch (error) {
+          console.error("Failed to send log:", error);
+        }
+      });
+    </script>
+  </body>
+</html>
